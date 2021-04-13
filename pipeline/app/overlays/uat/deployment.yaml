@@ -6,7 +6,7 @@ metadata:
     app.openshift.io/runtime: quarkus
   name: quarkus-podname
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: quarkus-podname
@@ -18,14 +18,14 @@ spec:
       containers:
       - name: quarkus-podname
         imagePullPolicy: Always
-        image: image-registry.openshift-image-registry.svc:5000/dev/quarkus-podname:latest
+        image: quay.io/cytan/quarkus-podname:latest
         livenessProbe:
           failureThreshold: 3
           httpGet:
             path: /
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 5
+          initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 1
@@ -38,7 +38,7 @@ spec:
             path: /
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 5
+          initialDelaySeconds: 15
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 5
