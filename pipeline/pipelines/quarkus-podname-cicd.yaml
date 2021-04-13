@@ -18,6 +18,9 @@ spec:
     - name: IMAGE_NAME
       type: string
       default: image-registry.openshift-image-registry.svc:5000/dev/quarkus-podname
+    - name: QUAY_IMAGE_NAME
+      type: string
+      default: quay.io/cytan/quarkus-podname
     - default: .
       name: PATH_CONTEXT
       type: string
@@ -118,6 +121,21 @@ spec:
           value: '$(params.KUSTOMIZE_BASE_DIR)'
         - name: GIT_COMMIT_ID
           value: '$(params.GIT_COMMIT_ID)'
+    - name: copy-image-to-quay
+      taskRef:
+        name: my-skopeo-copy
+        kind: Task
+      runAfter:
+        - deploy
+      params:
+        - name: srcImageURL
+          value: '$(params.IMAGE_NAME):latest'
+        - name: destImageURL
+          value: '$(params.QUAY_IMAGE_NAME):latest'
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: "false"
       workspaces:
         - name: source
           workspace: workspace

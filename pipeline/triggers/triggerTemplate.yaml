@@ -29,6 +29,8 @@ spec:
         value: master
       - name: IMAGE_NAME
         value: image-registry.openshift-image-registry.svc:5000/dev/quarkus-podname
+      - name: QUAY_IMAGE_NAME
+        value: quay.io/cytan/quarkus-podname
       - name: NAMESPACE
         value: dev
       - name: PATH_CONTEXT
