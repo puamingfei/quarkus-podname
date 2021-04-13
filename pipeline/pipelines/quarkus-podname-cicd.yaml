@@ -110,16 +110,6 @@ spec:
           value: '$(params.NAMESPACE)'
         - name: KUSTOMIZE_OVERLAY_DIR
           value: pipeline/app/base
-    - name: update-deployment
-      taskRef:
-        name: update-deployment
-      params:
-      - name: deployment
-        value: $(params.APP_NAME)
-      - name: IMAGE
-        value: $(params.IMAGE_NAME)
-      runAfter:
-        - deploy
       workspaces:
         - name: source
           workspace: workspace
