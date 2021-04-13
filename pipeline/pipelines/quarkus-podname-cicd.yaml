@@ -121,6 +121,9 @@ spec:
           value: '$(params.KUSTOMIZE_BASE_DIR)'
         - name: GIT_COMMIT_ID
           value: '$(params.GIT_COMMIT_ID)'
+      workspaces:
+        - name: source
+          workspace: workspace
     - name: copy-image-to-quay
       taskRef:
         name: my-skopeo-copy
@@ -136,6 +139,3 @@ spec:
           value: 'false'
         - name: destTLSverify
           value: "false"
-      workspaces:
-        - name: source
-          workspace: workspace
