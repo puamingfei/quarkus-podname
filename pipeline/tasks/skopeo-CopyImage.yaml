@@ -54,4 +54,4 @@ spec:
       script: |
         echo $AUTH_JSON > auth.json 
         cat auth.json
-        skopeo copy "$(params.srcImageURL)" "$(params.destImageURL)" --src-tls-verify=$(params.srcTLSverify) --dest-tls-verify=$(params.destTLSverify) --authfile=./auth.json 
+        skopeo copy "docker://$(params.srcImageURL)" "docker://$(params.destImageURL)" --src-tls-verify=$(params.srcTLSverify) --dest-tls-verify=$(params.destTLSverify) --authfile=./auth.json 

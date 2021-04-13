@@ -48,5 +48,4 @@ spec:
                 storage: 100Mi
       - name: maven-settings
         configMap:
-          name: maven-settings      
-        
+          name: maven-settings
