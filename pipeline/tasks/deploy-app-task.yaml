@@ -26,6 +26,8 @@ spec:
       type: string
     - name: KUSTOMIZE_OVERLAY_DIR
       description: The subdirectory in configs git repo for the kustomize overlay to be applied
+    - name: GIT_COMMIT_ID
+      description: Commit ID value from git repo
   workspaces:
   - description: The workspace consisting of maven project.
     name: source
@@ -77,7 +79,7 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
-          oc patch deployment/$(inputs.params.DEPLOYMENT_NAME) --patch "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"last-restart\":\"`date +'%s'`\"}}}}}"
+          oc patch deployment/$(params.DEPLOYMENT_NAME) --patch "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"git-commit-id\":\"$(params.GIT_COMMIT_ID)\"}}}}}"
 #    - name: patch
 #      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
 #      command: ["/bin/bash", "-c"]

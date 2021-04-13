@@ -24,6 +24,9 @@ spec:
     - name: NAMESPACE
       type: string
       default: pipeline-tutorial
+    - name: GIT_COMMIT_ID
+      type: string
+      default: 'manual'
   workspaces:
     - name: workspace 
     - name: maven-settings 
@@ -110,6 +113,8 @@ spec:
           value: '$(params.NAMESPACE)'
         - name: KUSTOMIZE_OVERLAY_DIR
           value: pipeline/app/base
+        - name: GIT_COMMIT_ID
+          value: '$(params.GIT_COMMIT_ID)'
       workspaces:
         - name: source
           workspace: workspace
