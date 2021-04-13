@@ -24,8 +24,8 @@ spec:
     - name: NAMESPACE
       description: The namespace for the deployment
       type: string
-    - name: KUSTOMIZE_OVERLAY_DIR
-      description: The subdirectory in configs git repo for the kustomize overlay to be applied
+    - name: KUSTOMIZE_BASE_DIR
+      description: The subdirectory in configs git repo for the kustomize base to be applied
     - name: GIT_COMMIT_ID
       description: Commit ID value from git repo
   workspaces:
@@ -36,33 +36,37 @@ spec:
       workingDir: $(workspaces.source.path)
       image: image-registry.openshift-image-registry.svc:5000/openshift/cli
       script: |
+        oc apply -k $(params.KUSTOMIZE_BASE_DIR) # -n $(params.NAMESPACE)
 
-        #find $(workspaces.source.path)
-
-        cat >> $(workspaces.source.path)/$(params.KUSTOMIZE_OVERLAY_DIR)/kustomization.yaml <<- EOF
-
-        images:
-        - name: image-registry.openshift-image-registry.svc:5000/a-util/quarkus-podname:latest
-          newName: $(params.NEW_IMAGE_NAME)
-          newTag: $(params.NEW_IMAGE_TAG)
-          digest: $(params.NEW_IMAGE_DIGEST)
-        EOF
-
-        [[ "x$(params.NEW_IMAGE_DIGEST)" == "x" ]] && sed -i "/digest/d" $(workspaces.source.path)/$(params.KUSTOMIZE_OVERLAY_DIR)/kustomization.yaml
-        [[ "x$(params.NEW_IMAGE_TAG)" == "x" ]] && sed -i "/newTag/d" $(workspaces.source.path)/$(params.KUSTOMIZE_OVERLAY_DIR)/kustomization.yaml
-
-        echo "########################"  
-        echo "## kustomization.yaml ##"
-        echo "########################"
-
-        cat $(workspaces.source.path)/$(params.KUSTOMIZE_OVERLAY_DIR)/kustomization.yaml
-
-        #echo "######## DRY RUN #######"
-        #oc apply -k $(params.KUSTOMIZE_OVERLAY_DIR) --dry-run=client -o yaml # -n $(params.NAMESPACE)
-        #echo "########################"
-
-        oc apply -k $(params.KUSTOMIZE_OVERLAY_DIR) # -n $(params.NAMESPACE)
-        #oc rollout status deploy/$(params.DEPLOYMENT_NAME) # -n $(params.NAMESPACE)
+#    - name: apply-manifests2
+#      workingDir: $(workspaces.source.path)
+#      image: image-registry.openshift-image-registry.svc:5000/openshift/cli
+#      script: |
+#        oc apply -k $(params.KUSTOMIZE_BASE_DIR) # -n $(params.NAMESPACE)
+#        find $(workspaces.source.path)
+#
+#        cat >> $(workspaces.source.path)/$(params.KUSTOMIZE_BASE_DIR)/kustomization.yaml <<- EOF
+#
+#        images:
+#        - name: image-registry.openshift-image-registry.svc:5000/a-util/quarkus-podname:latest
+#          newName: $(params.NEW_IMAGE_NAME)
+#          newTag: $(params.NEW_IMAGE_TAG)
+#          digest: $(params.NEW_IMAGE_DIGEST)
+#        EOF
+#
+#        [[ "x$(params.NEW_IMAGE_DIGEST)" == "x" ]] && sed -i "/digest/d" $(workspaces.source.path)/$(params.KUSTOMIZE_BASE_DIR)/kustomization.yaml
+#        [[ "x$(params.NEW_IMAGE_TAG)" == "x" ]] && sed -i "/newTag/d" $(workspaces.source.path)/$(params.KUSTOMIZE_BASE_DIR)/kustomization.yaml
+#
+#        echo "########################"  
+#        echo "## kustomization.yaml ##"
+#        echo "########################"
+#
+#        cat $(workspaces.source.path)/$(params.KUSTOMIZE_BASE_DIR)/kustomization.yaml
+#
+#        echo "######## DRY RUN #######"
+#        oc apply -k $(params.KUSTOMIZE_OVERLAY_DIR) --dry-run=client -o yaml # -n $(params.NAMESPACE)
+#        echo "########################"
+#        oc rollout status deploy/$(params.DEPLOYMENT_NAME) # -n $(params.NAMESPACE)
 
 #  steps:
 #    - name: apply
