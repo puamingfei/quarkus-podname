@@ -26,7 +26,7 @@ spec:
       default: pipeline-tutorial
     - name: GIT_COMMIT_ID
       type: string
-      default: 'manual'
+      default: manual
   workspaces:
     - name: workspace 
     - name: maven-settings 

@@ -79,7 +79,7 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
-          oc patch deployment/$(params.DEPLOYMENT_NAME) --patch "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"git-commit-id\":\"$(params.GIT_COMMIT_ID)\"}}}}}"
+          oc patch deployment/$(inputs.params.DEPLOYMENT_NAME) --patch "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"git-commit-id\":\"$(inputs.params.GIT_COMMIT_ID)\"}}}}}"
 #    - name: patch
 #      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
 #      command: ["/bin/bash", "-c"]
