@@ -23,9 +23,9 @@ spec:
         name: quarkus-podname-cicd
       params:
       - name: APP_NAME
-        value: quarkus-podname
+        value: $(tt.params.git-repo-name)
       - name: GIT_REPO
-        value: https://github.com/cytanss/quarkus-podname.git
+        value: $(tt.params.git-repo-url)
       - name: GIT_REVISION
         value: master
       - name: IMAGE_NAME
