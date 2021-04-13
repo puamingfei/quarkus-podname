@@ -32,7 +32,7 @@ spec:
       description: Verify the TLS on the src registry endpoint
       name: srcTLSverify
       type: string
-    - default: 'true'
+    - default: 'false'
       description: Verify the TLS on the dest registry endpoint
       name: destTLSverify
       type: string
