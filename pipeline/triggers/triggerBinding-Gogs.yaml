@@ -9,4 +9,4 @@ spec:
   - name: git-repo-name
     value: $(body.repository.name)
   - name: git-commit-id
-    value: $(body.commits.id)
+    value: $(body.after)
