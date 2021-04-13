@@ -35,7 +35,7 @@ spec:
       image: image-registry.openshift-image-registry.svc:5000/openshift/cli
       script: |
 
-        find $(workspaces.source.path)
+        #find $(workspaces.source.path)
 
         cat >> $(workspaces.source.path)/$(params.KUSTOMIZE_OVERLAY_DIR)/kustomization.yaml <<- EOF
 
