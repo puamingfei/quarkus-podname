@@ -25,18 +25,18 @@ spec:
         value: $(tt.params.git-repo-name)
       - name: GIT_REPO
         value: $(tt.params.git-repo-url)
-      - name: GIT_REVISION
-        value: master
-      - name: IMAGE_NAME
-        value: image-registry.openshift-image-registry.svc:5000/dev/quarkus-podname
-      - name: NAMESPACE
-        value: dev
-      - name: PATH_CONTEXT
-        value: .
+#      - name: GIT_REVISION
+#        value: master
+#      - name: IMAGE_NAME
+#        value: image-registry.openshift-image-registry.svc:5000/dev/quarkus-podname
+#      - name: NAMESPACE
+#        value: dev
+#      - name: PATH_CONTEXT
+#        value: .
       - name: GIT_COMMIT_ID
         value: $(tt.params.git-commit-id)
-      - name: QUAY_IMAGE_NAME
-        value: quay.io/cytan/quarkus-podname
+#      - name: QUAY_IMAGE_NAME
+#        value: quay.io/cytan/quarkus-podname
       workspaces:
       - name: workspace
         volumeClaimTemplate:

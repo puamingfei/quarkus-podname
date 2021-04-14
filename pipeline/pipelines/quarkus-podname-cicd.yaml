@@ -21,9 +21,9 @@ spec:
     - name: QUAY_IMAGE_NAME
       type: string
       default: quay.io/cytan/quarkus-podname
-    - default: .
-      name: PATH_CONTEXT
-      type: string
+#    - default: .
+#      name: PATH_CONTEXT
+#      type: string
     - name: NAMESPACE
       type: string
       default: dev
@@ -46,8 +46,8 @@ spec:
           value: $(params.GIT_REPO)
         - name: revision
           value: $(params.GIT_REVISION)
-        - name: subdirectory
-          value: ''
+#        - name: subdirectory
+#          value: ''
         - name: deleteExisting
           value: 'true'
       workspaces:
@@ -90,7 +90,7 @@ spec:
         - package
       params:
         - name: IMAGE
-          value: '$(params.IMAGE_NAME)'
+          value: '$(params.IMAGE_NAME):$(params.GIT_COMMIT_ID)'
         - name: TLSVERIFY
           value: 'false'
         - name: DOCKERFILE
@@ -109,12 +109,12 @@ spec:
           value: '$(params.APP_NAME)'
         - name: CURRENT_IMAGE
           value: '$(params.IMAGE_NAME)'
-        - name: NEW_IMAGE_NAME
-          value: '$(params.IMAGE_NAME)'
-        - name: NEW_IMAGE_TAG
-          value: "latest"
-        - name: NEW_IMAGE_DIGEST
-          value: $(tasks.build-image.results.IMAGE_DIGEST)
+#        - name: NEW_IMAGE_NAME
+#          value: '$(params.IMAGE_NAME)'
+#        - name: NEW_IMAGE_TAG
+#          value: "latest"
+#        - name: NEW_IMAGE_DIGEST
+#          value: $(tasks.build-image.results.IMAGE_DIGEST)
         - name: NAMESPACE
           value: '$(params.NAMESPACE)'
         - name: KUSTOMIZE_BASE_DIR
@@ -132,9 +132,9 @@ spec:
         - deploy
       params:
         - name: srcImageURL
-          value: '$(params.IMAGE_NAME):latest'
+          value: '$(params.IMAGE_NAME):$(params.GIT_COMMIT_ID)'
         - name: destImageURL
-          value: '$(params.QUAY_IMAGE_NAME):latest'
+          value: '$(params.QUAY_IMAGE_NAME):$(params.GIT_COMMIT_ID)'
         - name: srcTLSverify
           value: 'false'
         - name: destTLSverify

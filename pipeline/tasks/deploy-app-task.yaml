@@ -10,17 +10,17 @@ spec:
     - name: CURRENT_IMAGE
       description: The current image repo/image:tag in the manifests for the deployment
       type: string
-    - name: NEW_IMAGE_NAME
-      description: The new image repo/image to be deployed
-      type: string
-    - name: NEW_IMAGE_TAG
-      description: The new image tag to be deployed
-      type: string
-      default: ""
-    - name: NEW_IMAGE_DIGEST
-      description: The digest of the new image to get deployed
-      type: string
-      default: ""
+#    - name: NEW_IMAGE_NAME
+#      description: The new image repo/image to be deployed
+#      type: string
+#    - name: NEW_IMAGE_TAG
+#      description: The new image tag to be deployed
+#      type: string
+#      default: ""
+#    - name: NEW_IMAGE_DIGEST
+#      description: The digest of the new image to get deployed
+#      type: string
+#      default: ""
     - name: NAMESPACE
       description: The namespace for the deployment
       type: string
@@ -83,7 +83,16 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
+          oc rollout pause deploy $(inputs.params.DEPLOYMENT_NAME)
           oc patch deployment/$(inputs.params.DEPLOYMENT_NAME) --patch "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"git-commit-id\":\"$(inputs.params.GIT_COMMIT_ID)\"}}}}}"
+          oc patch deployment $(inputs.params.DEPLOYMENT_NAME) --patch='{"spec":{"template":{"spec":{
+            "containers":[{
+              "name": "$(inputs.params.DEPLOYMENT_NAME)",
+              "image":"$(inputs.params.CURRENT_IMAGE):$(inputs.params.GIT_COMMIT_ID)"
+            }]
+          }}}}'
+          oc rollout resume deploy $(inputs.params.DEPLOYMENT_NAME)
+
 #    - name: patch
 #      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
 #      command: ["/bin/bash", "-c"]
