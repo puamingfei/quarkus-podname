@@ -40,18 +40,18 @@ spec:
       description: secrets name to push to quay
       name: quay-secret
       type: string
-  volumes:
-    - name: quay-auth-secret
-      secret:
-        secretName: $(params.quay-secret)
   steps:
     - image: >-
         registry.redhat.io/rhel8/skopeo@sha256:16a9e6d89dbc80cf88fece341e63b99239082aabf705cc014c6350a14fb29509
       name: skopeo-copy
-      volumeMounts:
-        - name: quay-auth-secret
-          mountPath: /etc/secret-volume
-          readOnly: true
+      env:
+        - name: AUTH_JSON
+          valueFrom:
+            secretKeyRef:
+              name: $(params.quay-secret)
+              key: '.dockerconfigjson'
+      resources: {}
       script: |
-        cat /etc/secret-volume/.dockerconfigjson
-        skopeo copy "docker://$(params.srcImageURL)" "docker://$(params.destImageURL)" --src-tls-verify=$(params.srcTLSverify) --dest-tls-verify=$(params.destTLSverify) --authfile=/etc/secret-volume/.dockerconfigjson
+        echo $AUTH_JSON > auth.json 
+        cat auth.json
+        skopeo copy "docker://$(params.srcImageURL)" "docker://$(params.destImageURL)" --src-tls-verify=$(params.srcTLSverify) --dest-tls-verify=$(params.destTLSverify) --authfile=./auth.json 
