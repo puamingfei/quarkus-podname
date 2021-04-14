@@ -11,7 +11,7 @@ spec:
       default: quarkus-podname
     - name: GIT_REPO
       type: string
-      default: https://github.com/cytanss/quarkus-podname.git
+      default: http://gogs.apps.cluster-b517.b517.sandbox1869.opentlc.com/cytan/quarkus-podname.git
     - name: GIT_REVISION
       type: string
       default: master
@@ -33,6 +33,15 @@ spec:
     - name: KUSTOMIZE_BASE_DIR
       type: string
       default: pipeline/app/base
+    - name: GIT_DEPLOY_REPO
+      type: string
+      default: http://gogs.apps.cluster-b517.b517.sandbox1869.opentlc.com/cytan/quarkus-podname-deploy.git
+    - name: GIT_DEPLOY_USERNAME
+      type: string
+      default: cytan
+    - name: GIT_DEPLOY_PASSWORD
+      type: string
+      default: admin123
   workspaces:
     - name: workspace 
     - name: maven-settings 
@@ -139,3 +148,24 @@ spec:
           value: 'false'
         - name: destTLSverify
           value: "false"
+    - name: trigger-gitops
+      taskRef:
+        name: git-update-deployment
+        kind: Task
+      runAfter:
+        - copy-image-to-quay
+      params:
+        - name: GIT_REPOSITORY
+          value: '$(params.GIT_DEPLOY_REPO)'
+        - name: GIT_USERNAME
+          value: '$(params.GIT_DEPLOY_USERNAME)'
+        - name: GIT_PASSWORD
+          value: '$(params.GIT_DEPLOY_PASSWORD)'
+        - name: CURRENT_IMAGE
+          value: '$(params.QUAY_IMAGE_NAME):latest'
+        - name: NEW_IMAGE
+          value: '$(params.QUAY_IMAGE_NAME)'
+        - name: GIT_COMMIT_ID
+          value: '$(params.GIT_COMMIT_ID)'
+        - name: KUSTOMIZATION_PATH
+          value: 'base'
