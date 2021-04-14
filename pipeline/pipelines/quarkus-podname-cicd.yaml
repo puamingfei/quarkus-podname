@@ -169,3 +169,6 @@ spec:
           value: '$(params.GIT_COMMIT_ID)'
         - name: KUSTOMIZATION_PATH
           value: 'base'
+      workspaces:
+        - name: workspace
+          workspace: workspace          

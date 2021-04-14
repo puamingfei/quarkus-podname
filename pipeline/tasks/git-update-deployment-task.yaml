@@ -62,7 +62,7 @@ spec:
 
         git status
         git add $(params.KUSTOMIZATION_PATH)/kustomization.yaml
-        git commit -m "[$(context.pipelineRun.name)] Image digest updated"
+        git commit -m "Image version updated [$(params.GIT_COMMIT_ID)]"
 
         git remote add auth-origin $(echo $(params.GIT_REPOSITORY) | sed -E "s#http://(.*)#http://$(params.GIT_USERNAME):$(params.GIT_PASSWORD)@\1#g")
         
