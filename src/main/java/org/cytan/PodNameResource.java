@@ -22,6 +22,6 @@ public class PodNameResource {
     @Path("/podname")
     @Produces(MediaType.TEXT_PLAIN)
     public String getPodName() throws UnknownHostException{
-        return "Hello! from " + InetAddress.getLocalHost().getHostName();
+        return "Kill Trigger! from " + InetAddress.getLocalHost().getHostName();
     }
 }
