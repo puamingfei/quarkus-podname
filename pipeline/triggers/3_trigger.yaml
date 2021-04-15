@@ -7,4 +7,4 @@ spec:
   bindings:
     - ref: quarkus-podname
   template:
-     ref: quarkus-podname
+    name : quarkus-podname
