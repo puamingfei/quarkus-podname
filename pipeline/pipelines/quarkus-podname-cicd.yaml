@@ -11,13 +11,13 @@ spec:
       default: quarkus-podname
     - name: GIT_REPO
       type: string
-      default: http://gitea.apps.cluster-70b8.70b8.sandbox725.opentlc.com/cytan/quarkus-podname.git
+      default: http://gitea.apps.cluster-9246.9246.sandbox1154.opentlc.com/cytan/quarkus-podname.git
     - name: GIT_REVISION
       type: string
       default: master
     - name: IMAGE_NAME
       type: string
-      default: image-registry.openshift-image-registry.svc:5000/dev/quarkus-podname
+      default: image-registry.openshift-image-registry.svc:5000/quarkus-sit/quarkus-podname
     - name: QUAY_IMAGE_NAME
       type: string
       default: quay.io/cytan/quarkus-podname
@@ -26,7 +26,7 @@ spec:
 #      type: string
     - name: NAMESPACE
       type: string
-      default: dev
+      default: quarkus-sit
     - name: GIT_COMMIT_ID
       type: string
       default: manual
@@ -35,13 +35,13 @@ spec:
       default: pipeline/app/base
     - name: GIT_DEPLOY_REPO
       type: string
-      default: http://gitea.apps.cluster-70b8.70b8.sandbox725.opentlc.com/cytan/quarkus-podname-deploy.git
+      default: http://gitea.apps.cluster-9246.9246.sandbox1154.opentlc.com/cytan/quarkus-podname-deploy.git
     - name: GIT_DEPLOY_USERNAME
       type: string
       default: cytan
     - name: GIT_DEPLOY_PASSWORD
       type: string
-      default: cytan123
+      default: admin123
   workspaces:
     - name: workspace 
     - name: maven-settings 
