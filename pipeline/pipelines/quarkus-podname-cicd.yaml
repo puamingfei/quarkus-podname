@@ -107,7 +107,7 @@ spec:
       workspaces:
         - name: source
           workspace: workspace
-    - name: deploy
+    - name: deploy-sit
       taskRef:
         name: deploy-app
         kind: Task
@@ -138,7 +138,7 @@ spec:
         name: my-skopeo-copy
         kind: Task
       runAfter:
-        - deploy
+        - deploy-sit
       params:
         - name: srcImageURL
           value: '$(params.IMAGE_NAME):$(params.GIT_COMMIT_ID)'

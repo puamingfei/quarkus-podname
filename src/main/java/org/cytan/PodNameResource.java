@@ -12,16 +12,28 @@ import javax.ws.rs.core.MediaType;
 public class PodNameResource {
 
     @GET
+    @Path("/")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getPodName() throws UnknownHostException{
+        return "Hello! from " + InetAddress.getLocalHost().getHostName();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    @GET
     @Path("/hello-resteasy")
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
         return "Hello RESTEasy";
     }
 
-    @GET
-    @Path("/")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getPodName() throws UnknownHostException{
-        return "Aloha! from " + InetAddress.getLocalHost().getHostName();
-    }
 }
