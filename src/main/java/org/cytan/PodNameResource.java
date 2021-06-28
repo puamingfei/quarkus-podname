@@ -26,14 +26,14 @@ public class PodNameResource {
 
 
 
-    @ConfigProperty(name = "greeting.message", defaultValue = "Good day")
+    @ConfigProperty(name = "greeting.message", defaultValue = "default coding")
     String message;
 
     @GET
     @Path("/greeting")
     @Produces(MediaType.TEXT_PLAIN)
     public String greet() {
-        return this.message;
+        return "Greeting from "+this.message;
     }
 
     @GET
