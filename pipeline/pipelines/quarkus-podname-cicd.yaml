@@ -1,10 +1,10 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: quarkus-podname-cicd
+  name: ussp-cicd
 spec:
   description: >-
-    The Pipline to buld and deploy the Quarkus Podname Java App.
+    The Pipline to buld and deploy the USSP Rest API.
   params:
     - name: APP_NAME
       type: string
@@ -20,13 +20,13 @@ spec:
       default: image-registry.openshift-image-registry.svc:5000/quarkus-sit/quarkus-podname
     - name: QUAY_IMAGE_NAME
       type: string
-      default: quay.io/cytan/quarkus-podname
+      default: quay.io/mpua/ussp
 #    - default: .
 #      name: PATH_CONTEXT
 #      type: string
     - name: NAMESPACE
       type: string
-      default: quarkus-sit
+      default: ussp-sit
     - name: GIT_COMMIT_ID
       type: string
       default: manual
