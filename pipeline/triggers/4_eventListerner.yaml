@@ -1,11 +1,11 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
-  name: quarkus-podname-el
+  name: vote-app-el
 spec:
   serviceAccountName: pipeline
   triggers:
   - bindings:
-    - ref: quarkus-podname
+    - ref: vote-app
     template:
-      name: quarkus-podname
+      name: vote-app
