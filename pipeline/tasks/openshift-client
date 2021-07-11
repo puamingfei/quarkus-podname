@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: ytl-pipeline
+spec:
+  tasks:
+    - name: build-eap
+      params:
+        - name: ARGS
+          value:
+            - version
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+    - name: list-resource
+      params:
+        - name: ARGS
+          value:
+            - get
+            - all
+      runAfter:
+        - build-eap
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
